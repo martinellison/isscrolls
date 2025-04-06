@@ -102,6 +102,7 @@ read_oracle_from_json(int focus, int generate)
 	memset(temp_name, 0, sizeof(temp_name));
 
 again:
+	if (sflag) return;
 	die = roll_oracle_die();
 	if (die < 0 || die > max)
 		goto again;

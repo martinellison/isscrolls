@@ -45,6 +45,7 @@ cmd_create_new_note(char *title)
 		snprintf(n.title, MAX_NOTE_TITLE, "%s", title);
 	} else {
 again:
+		if (sflag) return;
 		printf("Enter a title for your note [max 25 chars]: ");
 		n.title = readline(NULL);
 		if (n.title != NULL && strlen(n.title) == 0) {
@@ -56,6 +57,7 @@ again:
 	}
 
 descagain:
+	if (sflag) return;
 	printf("Enter a description for your note [max 255 chars]: ");
 	n.description = readline(NULL);
 	if (n.description == NULL) {

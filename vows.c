@@ -47,6 +47,7 @@ cmd_create_new_vow(char *title)
 		snprintf(curchar->vow->title, MAX_VOW_TITLE, "%s", title);
 	} else {
 again:
+		if (sflag) return;
 		printf("Enter a title for your vow [max 25 chars]: ");
 		curchar->vow->title = readline(NULL);
 		if (curchar->vow->title != NULL && strlen(curchar->vow->title) == 0) {
@@ -59,6 +60,7 @@ again:
 	log_debug("New vow titled '%s'\n", curchar->vow->title);
 
 descagain:
+	if (sflag) return;
 	printf("Enter a description for your vow [max 255 chars]: ");
 	curchar->vow->description = readline(NULL);
 	if (curchar->vow->description != NULL &&

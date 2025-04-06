@@ -41,7 +41,7 @@ static int cursed = 0;
 static int banner = 1;
 static int output = 1;
 
-static volatile sig_atomic_t sflag = 0;
+volatile sig_atomic_t sflag = 0;
 
 FILE *journal_file = NULL;
 int journal_this = 0;
@@ -364,7 +364,7 @@ journaling(void) {
 void
 start_journal_entry(void)
 {
-	char path[_POSIX_PATH_MAX];
+	char path[_POSIX_PATH_MAX] = "";
 	time_t t;
 	struct tm *tm_ptr;
 
@@ -373,6 +373,10 @@ start_journal_entry(void)
 
 	if (journal_file == NULL) {
 		journal_file_name(path);
+		if (strlen(path) == 0) {
+			log_errx(1, "misiing journal path");
+			return;
+		}
 		journal_file = fopen(path, "a");
 		if (journal_file == NULL) {
 			printf("Could not open journal file (%s): %s\n", path, strerror(errno));

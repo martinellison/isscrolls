@@ -22,6 +22,7 @@
 #include <json-c/json.h>
 
 #include <stdio.h>
+#include <signal.h>
 
 #define VERSION "2025.a"
 #define PATH_SHARE_DIR "/usr/local/share/isscrolls"
@@ -57,7 +58,8 @@
 
 #define CURCHAR_CHECK() do { 											\
 	if (curchar == NULL) { 												\
-		printf("No character loaded.  Use 'cd' to load a character\n"); \
+		printf("No character loaded.  Use 'cd' to load a character.\n"); \
+		log_debug("No current character at %s(%d).\n", __FILE__, __LINE__); \
 		return; 														\
 	} 																\
 } while(0)
@@ -137,6 +139,8 @@ int get_int_from_cmd(const char *);
 int get_args_from_cmd(char *, char *, int*);
 
 /* isscrolls.c */
+
+extern volatile sig_atomic_t sflag;
 void cmd_quit(char *);
 void show_banner(char *);
 void log_debug(const char *, ...);
