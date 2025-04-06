@@ -47,8 +47,10 @@ cmd_create_new_vow(char *title)
 		snprintf(curchar->vow->title, MAX_VOW_TITLE, "%s", title);
 	} else {
 again:
+		log_debug("seeking title %d\n", sflag);
 		if (sflag) return;
 		printf("Enter a title for your vow [max 25 chars]: ");
+		if (!curchar || !curchar->vow ) {log_errx(1, "bad vow"); return;}
 		curchar->vow->title = readline(NULL);
 		if (curchar->vow->title != NULL && strlen(curchar->vow->title) == 0) {
 			printf("The title must contain at least one character\n");
@@ -368,6 +370,8 @@ save_vow(void)
 		log_debug("No active vow to save.\n");
 		return;
 	}
+	log_debug("saving vow");
+	if (curchar->vow == NULL) {log_errx(1, "no vow"); return;}
 
 	json_object *cobj = json_object_new_object();
 	json_object_object_add(cobj, "id", json_object_new_int(curchar->id));

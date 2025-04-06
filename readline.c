@@ -194,12 +194,16 @@ initialize_readline(const char *base_path)
 
 	rl_attempted_completion_function = my_completion;
 
+	// rl_catch_signals = 0;
+	// rl_clear_signals();
+
 	using_history();
 
 	snprintf(hist_path, _POSIX_PATH_MAX, "%s/history", base_path);
 
 	log_debug("Reading history from %s\n", hist_path);
 	read_history(hist_path);
+
 }
 
 char **
